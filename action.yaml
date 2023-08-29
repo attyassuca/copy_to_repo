@@ -1,0 +1,43 @@
+name: "copy to central repo"
+description: "copy to central repo"
+inputs:
+  CENTRAL_REPO_TOKEN:
+    required: true
+    description: "the central repo token"
+
+
+runs:
+  using: "composite"
+  steps:
+  - name: Copy to Central Repository
+    shell: bash
+    run: |
+      # Clone the central repository
+      git clone https://TrouveTaVoie:${{ inputs.CENTRAL_REPO_TOKEN }}@github.com/TrouveTaVoie/ttv-apis.git central-repo
+      # Copy the content of src/services to central repository clone
+      cp -r src/services/* central-repo/src/services/
+        
+      # Copy resources.yml to central repository clone
+      cp src/resources/resources.yml central-repo/src/resources/
+          
+      # Commit and push the changes to the central repository
+      cd central-repo
+
+      # execute script to list 
+      chmod +x src/script.sh
+      bash src/script.sh 
+
+      mv src/serverless-compose.yml serverless-compose.yml
+
+      git config user.email "actions@github.com"
+      git config user.name "GitHub Actions"
+      git add -A .
+      git commit -m "Automatic copy of valid files"
+
+      # Set Git remote to the central repository
+      git remote set-url origin https://TrouveTaVoie:${{ inputs.CENTRAL_REPO_TOKEN }}@github.com/TrouveTaVoie/ttv-apis.git
+          
+
+      git push origin main
+    env:
+      CENTRAL_REPO_TOKEN: ${{ inputs.CENTRAL_REPO_TOKEN }}
