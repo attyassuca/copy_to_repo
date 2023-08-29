@@ -13,7 +13,7 @@ runs:
     shell: bash
     run: |
       # Clone the central repository
-      git clone https://MOHAMMED-SENHAJI:${{ secrets.CENTRAL_REPO_TOKEN }}@github.com/MOHAMMED-SENHAJI/central-repository.git central-repo
+      git clone https://MOHAMMED-SENHAJI:${{ inputs.CENTRAL_REPO_TOKEN }}@github.com/MOHAMMED-SENHAJI/central-repository.git central-repo
       # Copy the content of src/services to central repository clone
       cp -r src/services/* central-repo/src/services/
         
@@ -35,7 +35,7 @@ runs:
       git commit -m "Automatic copy of valid files"
 
       # Set Git remote to the central repository
-      git remote set-url origin https://MOHAMMED-SENHAJI:${{ secrets.CENTRAL_REPO_TOKEN }}@github.com/MOHAMMED-SENHAJI/central-repository.git
+      git remote set-url origin https://MOHAMMED-SENHAJI:${{ inputs.CENTRAL_REPO_TOKEN }}@github.com/MOHAMMED-SENHAJI/central-repository.git
           
 
       git push origin main
