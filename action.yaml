@@ -4,12 +4,12 @@ inputs:
   CENTRAL_REPO_TOKEN:
     required: true
     description: "the central repo token"
-  # REPO_OWNER:
-  #   required: true
-  #   description: "the username where we have the cenral repo "
-  # REPO_NAME:
-  #   required: true
-  #   description: "the name of the repository"  
+  REPO_OWNER:
+    required: true
+    description: "the username where we have the cenral repo "
+  REPO_NAME:
+    required: true
+    description: "the name of the repository"  
 
 
 
