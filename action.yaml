@@ -4,6 +4,15 @@ inputs:
   CENTRAL_REPO_TOKEN:
     required: true
     description: "the central repo token"
+  REPO_OWNER:
+    required: true
+    description: "the username where we have the cenral repo "
+  REPO_NAME:
+    required: true
+    description: "the name of the repository"  
+
+
+
 
 
 runs:
@@ -13,7 +22,7 @@ runs:
     shell: bash
     run: |
       # Clone the central repository
-      git clone https://MOHAMMED-SENHAJI:${{ inputs.CENTRAL_REPO_TOKEN }}@github.com/MOHAMMED-SENHAJI/central-repository.git central-repo
+      git clone ${{ inputs.REPO_OWNER }}:${{ inputs.CENTRAL_REPO_TOKEN }}@github.com/${{ inputs.REPO_OWNER }}/${{ inputs.REPO_NAME }}.git central-repo
       # Copy the content of src/services to central repository clone
       cp -r src/services/* central-repo/src/services/
         
@@ -35,7 +44,7 @@ runs:
       git commit -m "Automatic copy of valid files"
 
       # Set Git remote to the central repository
-      git remote set-url origin https://MOHAMMED-SENHAJI:${{ inputs.CENTRAL_REPO_TOKEN }}@github.com/MOHAMMED-SENHAJI/central-repository.git
+      git remote set-url origin https://${{ inputs.REPO_OWNER }}:${{ inputs.CENTRAL_REPO_TOKEN }}@github.com/${{ inputs.REPO_OWNER }}/${{ inputs.REPO_NAME} }.git
           
 
       git push origin main
