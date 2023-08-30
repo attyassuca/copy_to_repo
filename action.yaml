@@ -44,7 +44,7 @@ runs:
       git commit -m "Automatic copy of valid files"
 
       # Set Git remote to the central repository
-      git remote set-url origin https://${{ inputs.REPO_OWNER }}:${{ inputs.CENTRAL_REPO_TOKEN }}@github.com/${{ inputs.REPO_OWNER }}/${{ inputs.REPO_NAME} }.git
+      git remote set-url origin https://${{ inputs.REPO_OWNER }}:${{ inputs.CENTRAL_REPO_TOKEN }}@github.com/${{ inputs.REPO_OWNER }}/${{ inputs.REPO_NAME}}.git
           
 
       git push origin main
