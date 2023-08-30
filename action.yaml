@@ -4,12 +4,12 @@ inputs:
   CENTRAL_REPO_TOKEN:
     required: true
     description: "the central repo token"
-  REPO_OWNER:
-    required: true
-    description: "the username where we have the cenral repo "
-  REPO_NAME:
-    required: true
-    description: "the name of the repository"  
+  # REPO_OWNER:
+  #   required: true
+  #   description: "the username where we have the cenral repo "
+  # REPO_NAME:
+  #   required: true
+  #   description: "the name of the repository"  
 
 
 
@@ -22,7 +22,7 @@ runs:
     shell: bash
     run: |
       # Clone the central repository
-      git clone ${{ inputs.REPO_OWNER }}:${{ inputs.CENTRAL_REPO_TOKEN }}@github.com/${{ inputs.REPO_OWNER }}/${{ inputs.REPO_NAME }}.git central-repo
+      git clone https://${{ inputs.REPO_OWNER }}:${{ inputs.CENTRAL_REPO_TOKEN }}@github.com/${{ inputs.REPO_OWNER }}/${{ inputs.REPO_NAME }}.git central-repo
       # Copy the content of src/services to central repository clone
       cp -r src/services/* central-repo/src/services/
         
