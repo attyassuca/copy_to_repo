@@ -32,9 +32,29 @@ runs:
       # Commit and push the changes to the central repository
       cd central-repo
 
-      # execute script to list 
-      chmod +x src/script.sh
-      bash src/script.sh 
+      # get list of servvices
+      names_list=$(ls src/services/ | grep "^.*service$")
+      #Put each name in line
+      IFS=$'\n' read -d '' -ra names <<< "$names_list"
+      
+      # Insert predefined name into the YAML structure
+      yaml_content=""
+      for name in "${names[@]}"; do
+        entry="     $name:\n       path: /src/services/$name\n"
+        yaml_content="$yaml_content$entry"
+      done
+      
+      echo $yaml_content
+      # Load the template YAML
+      template=$(cat src/serverless-compose-template.yml)
+
+      # Replace the {name} placeholder with the predefined words
+      final_yaml=$(echo "$template" | sed "s@{names}@$yaml_content@")
+
+      # Write the final YAML data to a file
+      echo -e "$final_yaml" > src/serverless-compose.yml
+
+      echo "YAML file generated successfully."#!/bin/bash
 
       mv src/serverless-compose.yml serverless-compose.yml
 
