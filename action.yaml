@@ -43,7 +43,7 @@ runs:
         entry="     $name:\n       path: /src/services/$name\n"
         yaml_content="$yaml_content$entry"
       done
-      
+
       echo $yaml_content
       # Load the template YAML
       template=$(cat src/serverless-compose-template.yml)
@@ -54,7 +54,7 @@ runs:
       # Write the final YAML data to a file
       echo -e "$final_yaml" > src/serverless-compose.yml
 
-      echo "YAML file generated successfully."#!/bin/bash
+      echo "YAML file generated successfully."
 
       mv src/serverless-compose.yml serverless-compose.yml
 
