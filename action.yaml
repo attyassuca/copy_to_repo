@@ -26,8 +26,8 @@ runs:
       # Copy the content of src/services to central repository clone
       cp -r src/services/* central-repo/src/services/
         
-      # Copy resources.yml to central repository clone
-      cp src/resources/resources.yml central-repo/src/resources/
+      # Copy resources to central repository clone
+      cp -r src/resources/* central-repo/src/resources/
           
       # Commit and push the changes to the central repository
       cd central-repo
