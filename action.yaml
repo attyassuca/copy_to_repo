@@ -30,7 +30,6 @@ runs:
       cp -r src/resources/* central-repo/src/resources/
           
       # Commit and push the changes to the central repository
-      cd central-repo
 
       # execute script to list 
       # get the list of all services
@@ -44,7 +43,7 @@ runs:
         entry="     $name:\n       path: /src/services/$name\n"
         yaml_content="$yaml_content$entry"
       done
-      
+
       echo $yaml_content
       # Load the template YAML
       template=$(cat src/serverless-compose-template.yml)
@@ -54,6 +53,8 @@ runs:
 
       # Write the final YAML data to a file
       echo -e "$final_yaml" > src/serverless-compose.yml
+
+      cd central-repo
 
       mv src/serverless-compose.yml serverless-compose.yml
 
