@@ -17,7 +17,7 @@ inputs:
 
 runs:
   using: "composite"
-  steps:
+  steps: 
   - name: Copy to Central Repository
     shell: bash
     run: |
@@ -33,8 +33,32 @@ runs:
       cd central-repo
 
       # execute script to list 
-      chmod +x src/script.sh
-      bash src/script.sh 
+      # get the list of all services
+      names_list=$(ls src/services/ | grep "^.*service$")
+      #Put each name in line
+      IFS=$'\n' read -d '' -ra names <<< "$names_list"
+      #echo list
+      for name in "${names[@]}"; do
+        echo "$name"
+      done
+
+      # Insert predefined name into the YAML structure
+      yaml_content=""
+      for name in "${names[@]}"; do
+        entry="     $name:\n       path: /src/services/$name\n"
+        yaml_content="$yaml_content$entry"
+      done
+      echo $yaml_content
+      # Load the template YAML
+      template=$(cat src/serverless-compose-template.yml)
+
+      # Replace the {name} placeholder with the predefined words
+      final_yaml=$(echo "$template" | sed "s@{names}@$yaml_content@")
+
+      # Write the final YAML data to a file
+      echo -e "$final_yaml" > src/serverless-compose.yml
+
+      echo "YAML file generated successfully."
 
       mv src/serverless-compose.yml serverless-compose.yml
 
