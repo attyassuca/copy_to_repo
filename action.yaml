@@ -10,14 +10,9 @@ inputs:
   REPO_NAME:
     required: true
     description: "the name of the repository"  
-
-
-
-
-
 runs:
   using: "composite"
-  steps: 
+  steps:
   - name: Copy to Central Repository
     shell: bash
     run: |
@@ -26,35 +21,15 @@ runs:
       # Copy the content of src/services to central repository clone
       cp -r src/services/* central-repo/src/services/
         
-      # Copy resources to central repository clone
+      # Copy resources.yml to central repository clone
       cp -r src/resources/* central-repo/src/resources/
           
       # Commit and push the changes to the central repository
+      cd central-repo
 
       # execute script to list 
-      # get the list of all services
-      names_list=$(ls src/services/ | grep "^.*service$")
-      #Put each name in line
-      IFS=$'\n' read -d '' -ra names <<< "$names_list"
-
-      # Insert predefined name into the YAML structure
-      yaml_content=""
-      for name in "${names[@]}"; do
-        entry="     $name:\n       path: /src/services/$name\n"
-        yaml_content="$yaml_content$entry"
-      done
-
-      echo $yaml_content
-      # Load the template YAML
-      template=$(cat src/serverless-compose-template.yml)
-
-      # Replace the {name} placeholder with the predefined words
-      final_yaml=$(echo "$template" | sed "s@{names}@$yaml_content@")
-
-      # Write the final YAML data to a file
-      echo -e "$final_yaml" > src/serverless-compose.yml
-
-      cd central-repo
+      chmod +x src/script.sh
+      bash src/script.sh 
 
       mv src/serverless-compose.yml serverless-compose.yml
 
